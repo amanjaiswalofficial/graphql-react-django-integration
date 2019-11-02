@@ -12,19 +12,15 @@ import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import Error from '../Shared/Error'
 
-//To Login the user and obtain it's JWTToken, which is later stored in localStorage as authToken
-//And at the same time, value for isLoggedIn set to true in clientState variable
 const Login = ({ classes, setnewUser }) => {
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  //b.handleSubmit takes a method as input and executes it
   const handleSubmit = async(event, tokenAuth, client) =>
   {
     console.log(client)
     event.preventDefault()
-    //c. method same name as defined in the GQLQuery below executed with values provided
     const res = await tokenAuth()
     localStorage.setItem("authToken", res.data.tokenAuth.token)
     client.writeData({data: {isLoggedIn: true}})
@@ -83,8 +79,6 @@ const Login = ({ classes, setnewUser }) => {
   )
 };
 
-//Actual GQLQuery that will be run and will return a token based on the user
-//Otherwise return an error
 const LOGIN_MUTATION=gql`
 mutation ($username: String!, $password: String!)
 {
