@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {gql} from 'apollo-boost'
 import { Query } from 'react-apollo'
@@ -10,19 +10,27 @@ import Loading from "../components/Shared/Loading";
 import Error from "../components/Shared/Error";
 
 
-//C4 Based on the query made, a list of tracks is sent as value for Tracks
-//to Tracks component, which will display all of them as individual components
+//C5 Added search functionality, also searchResult is passed via SearchList
+//if any value exist in searchResult, that is displayed instead of all
+//otherwise all the data's query will be returned
 const App = ({ classes }) => {
+
+  const [searchResults, setSearchResults] = useState([])
+
+  //passing setSearchResult to the component
+  //where it will set value of searchResults
   return (
     <div className={classes.container}>
-    <SearchTracks/>
+    
+    <SearchTracks setSearchResults={setSearchResults}/>
     <CreateTrack/>
     <Query query={GET_TRACKS_QUERY}>
     {({data, loading, error}) => {
       if (loading) return <Loading/>
       if (error) return <Error/>
 
-      return <TrackList tracks={data.tracks}/>
+      const tracks = searchResults.length > 0 ? searchResults: data.tracks
+      return <TrackList tracks={tracks}/>
     }}
     </Query>
     </div>
@@ -30,7 +38,6 @@ const App = ({ classes }) => {
 };
 
 
-//C4, actual query to get the track details
 export const GET_TRACKS_QUERY = gql`
 query getTracksQuery{
   tracks{
