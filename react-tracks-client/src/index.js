@@ -7,15 +7,11 @@ import { ApolloProvider, Query } from 'react-apollo';
 import ApolloClient, {gql} from 'apollo-boost'
 
 
-//C2: To add header and adding auth header value
 const client = new ApolloClient({
     uri: 'http://localhost:8000/graphql/',
-    //2a. adding option to include credentials
     fetchOptions: {
         credentials: "include"
     },
-    //2b. getting value out of localStorage
-    //and adding it as auth header while passing any request
     request: operation => {
         const token = localStorage.getItem('authToken') || ""
         operation.setContext({
@@ -24,7 +20,6 @@ const client = new ApolloClient({
             }
         })
     },
-    //2c.After this any query needing JWT token can be run, as shown in Root's ME_QUERY
     clientState: {
         defaults: {
             isLoggedIn: !!localStorage.getItem('authToken')

@@ -4,7 +4,7 @@ import ExitToApp from "@material-ui/icons/ExitToApp";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-//C2.a.To use Client object to remove isLoggedIn when SignOut
+//To use Client object to remove isLoggedIn when SignOut
 import { ApolloConsumer } from "react-apollo"
 
 const Signout = ({ classes }) => {
@@ -15,8 +15,6 @@ const Signout = ({ classes }) => {
     console.log(client)
   }
 
-  //b.here, via ApolloConsumer, client object is passed which can be used to remove anything from client
-  //and trigger any true false type events
   return (
     <ApolloConsumer>
     {client => (<Button onClick={() => handleSignout(client)}>

@@ -11,7 +11,6 @@ import Loading from "./components/Shared/Loading"
 import Error from "./components/Shared/Error"
 
 
-//C2. Adding routes to different pages, one to main app another to profile
 const Root = () => (
     <Query query={ME_QUERY}>
     
@@ -38,8 +37,6 @@ const Root = () => (
     </Query>
 )
 
-//query to get details of current user
-//first checks the JWT token passed via config of graphql client's authorization header
 const ME_QUERY = gql`
 {
     me{
