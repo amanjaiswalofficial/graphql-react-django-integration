@@ -19,8 +19,6 @@ import { gql } from "apollo-boost";
 import Error from '../Shared/Error'
 
 
-
-//This will use createUser and pass 3 values to run the query on GraphQL side
 const Register = ({ classes, setnewUser }) => {
 
   const [username, setUsername] = useState("")
@@ -28,11 +26,9 @@ const Register = ({ classes, setnewUser }) => {
   const [email, setEmail] = useState("")
   const [open, setOpen] = useState(false)
 
-  //c.handleSubmit runs createUser function from GQLMutation
   const handleSubmit = (event, createUser) =>
   {
     event.preventDefault()
-    //e.gets whatever output createUser returns
     createUser()
   }
 
@@ -108,11 +104,6 @@ const Register = ({ classes, setnewUser }) => {
   )
 };
 
-
-//The actual query when run will return a created user
-//Hence requires values for variables to be provided.
-//Which here are being passed from above form.
-//d.Values are provided for the required variables
 const REGISTER_MUTATION = gql`
 mutation ($username: String!, $email: String!, $password: String!){
   createUser(username: $username, email: $email, password: $password)
