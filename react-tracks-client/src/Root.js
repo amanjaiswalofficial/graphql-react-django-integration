@@ -44,12 +44,20 @@ const Root = () => (
     </Query>
 )
 
-const ME_QUERY = gql`
+//updated Query containting the likeSet of the user
+//use to find what tracks has he liked
+export const ME_QUERY = gql`
 {
     me{
         id
         username
         email
+        likeSet{
+            id
+            track{
+                id
+            }
+        }
     }
 }
 `

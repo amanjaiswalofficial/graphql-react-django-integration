@@ -26,8 +26,8 @@ const TrackList = ({ classes, tracks }) => (
   {tracks.map(track => (
       <ExpansionPanel key={track.id}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-          <ListItem classname={classes.root}>
-          <LikeTrack/>
+          <ListItem className={classes.root}>
+          <LikeTrack trackId={track.id} likeCount={track.likes.length}/>
           {/*Various detail of tracks are displayed */}
             <ListItemText
             primaryTypographyProps={{
