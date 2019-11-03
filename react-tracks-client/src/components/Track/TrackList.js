@@ -12,6 +12,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import {Link} from 'react-router-dom'
 
+import AudioPlayer from '../Shared/AudioPlayer'
 import LikeTrack from './LikeTrack'
 import DeleteTrack from './DeleteTrack'
 import UpdateTrack from './UpdateTrack'
@@ -22,7 +23,7 @@ import UpdateTrack from './UpdateTrack'
 //each track is then mapped so that it can be displayed as an individual element
 const TrackList = ({ classes, tracks }) => (
   <List>
-    {tracks.map(track => (
+  {tracks.map(track => (
       <ExpansionPanel key={track.id}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
           <ListItem className={classes.root}>
@@ -44,8 +45,7 @@ const TrackList = ({ classes, tracks }) => (
             </Typography>
         </ExpansionPanelDetails>
       <ExpansionPanelActions>
-        {/*Also some option related to tracks are displayed */}
-            <UpdateTrack/>
+            <UpdateTrack track={track}/>
             <DeleteTrack/>
       </ExpansionPanelActions>
       </ExpansionPanel>

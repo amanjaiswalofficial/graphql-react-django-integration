@@ -17,11 +17,8 @@ const App = ({ classes }) => {
 
   const [searchResults, setSearchResults] = useState([])
 
-  //passing setSearchResult to the component
-  //where it will set value of searchResults
   return (
     <div className={classes.container}>
-    
     <SearchTracks setSearchResults={setSearchResults}/>
     <CreateTrack/>
     <Query query={GET_TRACKS_QUERY}>
@@ -38,6 +35,7 @@ const App = ({ classes }) => {
 };
 
 
+//C4, actual query to get the track details
 export const GET_TRACKS_QUERY = gql`
 query getTracksQuery{
   tracks{
