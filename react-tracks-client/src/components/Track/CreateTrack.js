@@ -18,13 +18,23 @@ import {Mutation} from "react-apollo"
 import {gql} from "apollo-boost"
 import {GET_TRACKS_QUERY} from '../../pages/App'
 
-//C4 from Tracklist.js, option to create new Track
-//gives a dialog box with fields for title and description
+//C9 Using apollo cache, via 'update' below, in order to update page 
+//via cache instead of calling query again
 const CreateTrack = ({ classes }) => {
 
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+
+  //What it does?
+  //get data from GET_TRACKS_QUERY saved in cache
+  //get latest track created
+  //update the cache with the latest track
+  const handleUpdateCache = (cache, {data: {createTrack}}) => {
+    const data = cache.readQuery({query: GET_TRACKS_QUERY})
+    const tracks = data.tracks.concat(createTrack.track)
+    cache.writeQuery({query: GET_TRACKS_QUERY, data:{tracks}})
+  }
 
   const handleSubmit = (event, createTrack) => {
     event.preventDefault()
@@ -45,7 +55,9 @@ const CreateTrack = ({ classes }) => {
       onCompleted={data => {
         setOpen(false)
       }}
-      refetchQueries={() => [{query: GET_TRACKS_QUERY}]}
+      //to run after data posted successfully instead of refetchQueries
+      //IMPORTANT: no () with handleUpdateCache??
+      update={handleUpdateCache}
       >
 
 
@@ -106,6 +118,14 @@ mutation($title: String!, $description: String!, $url: String!){
       id
       title
       description
+      url
+      likes{
+        id
+      }
+      postedBy{
+        id
+        username
+      }
     }
   }
 }

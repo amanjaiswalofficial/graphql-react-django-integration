@@ -10,19 +10,19 @@ import Header from "./components/Shared/Header"
 import Loading from "./components/Shared/Loading"
 import Error from "./components/Shared/Error"
 
-//C6 using useContext to send user data from here to a track
-//on basis of which the option to update track will be present else absent
 export const UserContext = React.createContext()
 
+
+//C9: fetchPolicy determines where to look after changes, which is applied in refetchQueries
+//of queries and mutations, so here, it first looks at cache and then network too to detech for change
+//to update the pages
 const Root = () => (
-    <Query query={ME_QUERY}>
+    <Query query={ME_QUERY} fetchPolicy='cache-and-network'>
     
     {({data, loading, error}) => {
         if(loading) return <Loading/>
         if(error) return <Error error={error}/>
 
-        //value of current user fetched from data and passed via provider
-        //which will be used in UpdateTrack
         const currentUser = data.me
         return (
             <Router>
@@ -44,8 +44,6 @@ const Root = () => (
     </Query>
 )
 
-//updated Query containting the likeSet of the user
-//use to find what tracks has he liked
 export const ME_QUERY = gql`
 {
     me{
